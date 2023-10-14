@@ -7,24 +7,25 @@ public class MinMax {
 
         String marker;
         if (isMaximizingPlayer) {
-            marker = "X";
-        } else {
             marker = "O";
+        } else {
+            marker = "X";
         }
+
 
         if (board.hasEmptyCells()) {
             board.createChildBoards(board, marker);
         }
 
+
         if (depth == 0 || board.getChildBoards().isEmpty()) {
-            board.printBoard();
             return board.getValue();
         }
 
         if (isMaximizingPlayer) {
             int maxEval = Integer.MIN_VALUE;
             for (Board child : board.getChildBoards()) {
-                child.checkWinner();
+                child.checkValue();
                 int eval = minMax(child, depth - 1, false);
                 maxEval = Math.max(maxEval, eval);
             }
@@ -32,8 +33,7 @@ public class MinMax {
         } else {
             int minEval = Integer.MAX_VALUE;
             for (Board child : board.getChildBoards()) {
-                child.checkWinner();
-
+                child.checkValue();
                 int eval = minMax(child, depth - 1, true);
                 minEval = Math.min(minEval, eval);
             }

@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Board implements BoardOp {
 
     private int value;
-    private final String[][] board;
+    private String[][] board;
 
     ArrayList<Board> childBoards = new ArrayList<>();
 
@@ -18,14 +18,24 @@ public class Board implements BoardOp {
     public int getValue() {
         return value;
     }
+
     public String[][] getBoard() {
-        return board;
+        return  this.board;
+    }
+
+
+    public void setBoard(String [][] newBoard) {
+        board = newBoard;
+    }
+
+    public void emptyChildBoards() {
+        this.childBoards.clear();
     }
 
     //-----------------------------------------------
     @Override
     public void printBoard() {
-        String[][] currentBoard = getBoard();
+        String[][] currentBoard = this.board;
 
         for (String[] row : currentBoard) {
             for (int col = 0; col < currentBoard.length; col++) {
@@ -39,8 +49,8 @@ public class Board implements BoardOp {
     }
 
     @Override
-    public Board copyBoard() {
-        return null;
+    public Board copyBoard(Board board) {
+        return board;
     }
 
     @Override
@@ -55,7 +65,6 @@ public class Board implements BoardOp {
                 }
             }
         }
-
         return false;
     }
 
@@ -65,7 +74,12 @@ public class Board implements BoardOp {
     }
 
     @Override
-    public void createChildBoards(Board board, String marker) {
+    public void createChildBoards(Board board,String marker) {
+
+        if (value != 0) {
+            return;
+        }
+
         String[][] currentBoard = board.getBoard();
 
         for (int row = 0; row < currentBoard.length; row++) {
@@ -86,7 +100,6 @@ public class Board implements BoardOp {
         }
     }
 
-
     @Override
     public ArrayList<Board> getChildBoards() {
         return childBoards;
@@ -94,51 +107,82 @@ public class Board implements BoardOp {
 
     @Override
     public boolean isValidMove(int row, int col) {
-        return false;
+        return Objects.equals(this.board[row][col], " ");
     }
 
     @Override
     public void placeMarker(String mark, int row, int col) {
-
+        this.board[row][col] = mark;
     }
 
     @Override
-    public void checkWinner() {
+    public void checkValue() {
         // Check rows
         for (String[] row : board) {
-            if (row[0].equals(row[1]) &&
-                    row[1].equals(row[2]) &&
-                    !row[0].equals(" ")) {
-
-                value = 1;
-                break;
+            if (row[0].equals(row[1]) && row[1].equals(row[2]) && !row[0].equals(" ")) {
+                if (row[0].equals("X")) {
+                    value += 1; // Player wins
+                } else if (row[0].equals("O")) {
+                    value -= 1; // Computer wins
+                }
+                return;
             }
         }
+
         // Check columns
         for (int i = 0; i < board[0].length; i++) {
-            if (board[0][i].equals(board[1][i]) &&
-                    board[1][i].equals(board[2][i]) &&
-                    !board[0][i].equals(" ")) {
-
-                value = 1;
-                break;
+            if (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && !board[0][i].equals(" ")) {
+                if (board[0][i].equals("X")) {
+                    value += 1; // Player wins
+                } else if (board[0][i].equals("O")) {
+                    value -= 1; // Computer wins
+                }
+                return;
             }
         }
 
         // Check diagonals
-        if (board[0][0].equals(board[1][1]) &&
-                board[1][1].equals(board[2][2]) &&
-                !board[0][0].equals(" ")) {
-
-            value = 1;
+        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(" ")) {
+            if (board[0][0].equals("X")) {
+                value += 1; // Player wins
+            } else if (board[0][0].equals("O")) {
+                value -= 1; // Computer wins
+            }
             return;
         }
 
-        if (board[0][2].equals(board[1][1]) &&
-                board[1][1].equals(board[2][0]) &&
-                !board[0][2].equals(" ")) {
-
-            value = 1;
+        if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals(" ")) {
+            if (board[0][2].equals("X")) {
+                value += 1; // Player wins
+            } else if (board[0][2].equals("O")) {
+                value -= 1; // Computer wins
+            }
         }
+    }
+
+    public boolean isWinner() {
+        // Check rows
+        for (int i = 0; i < 3; i++) {
+            if (checkLine(board[i][0], board[i][1], board[i][2])) {
+                return true;
+            }
+        }
+
+        // Check columns
+        for (int i = 0; i < 3; i++) {
+            if (checkLine(board[0][i], board[1][i], board[2][i])) {
+                return true;
+            }
+        }
+
+        // Check diagonals
+        if (checkLine(board[0][0], board[1][1], board[2][2]) || checkLine(board[0][2], board[1][1], board[2][0])) {
+            return true;
+        }
+
+        return false;
+    }
+    private boolean checkLine(String a, String b, String c) {
+        return (!a.equals(" ")) && (a.equals(b)) && (b.equals(c));
     }
 }
