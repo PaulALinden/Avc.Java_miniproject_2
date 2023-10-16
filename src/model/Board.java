@@ -1,14 +1,19 @@
 package model;
 
+import controller.GameHandler;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static model.childCount.child;
+import static model.childCount.childCounter;
 
 public class Board implements BoardOp {
 
     private int value;
     private String[][] board;
 
-    ArrayList<Board> childBoards = new ArrayList<>();
+    private final ArrayList<Board> childBoards = new ArrayList<>();
 
     public Board(int value, String[][] board) {
         this.value = value;
@@ -17,6 +22,10 @@ public class Board implements BoardOp {
 
     public int getValue() {
         return value;
+    }
+
+    public void setValue(int newValue) {
+         value = newValue;
     }
 
     public String[][] getBoard() {
@@ -45,12 +54,6 @@ public class Board implements BoardOp {
             }
             System.out.println();
         }
-        System.out.println("_______________");
-    }
-
-    @Override
-    public Board copyBoard(Board board) {
-        return board;
     }
 
     @Override
@@ -66,11 +69,6 @@ public class Board implements BoardOp {
             }
         }
         return false;
-    }
-
-    @Override
-    public void setNextBoard() {
-
     }
 
     @Override
@@ -116,14 +114,14 @@ public class Board implements BoardOp {
     }
 
     @Override
-    public void checkValue() {
+    public void evalMove() {
         // Check rows
         for (String[] row : board) {
             if (row[0].equals(row[1]) && row[1].equals(row[2]) && !row[0].equals(" ")) {
                 if (row[0].equals("X")) {
-                    value += 1; // Player wins
+                    setValue(1); // Player wins
                 } else if (row[0].equals("O")) {
-                    value -= 1; // Computer wins
+                    setValue(-1); // Computer wins
                 }
                 return;
             }
@@ -133,9 +131,9 @@ public class Board implements BoardOp {
         for (int i = 0; i < board[0].length; i++) {
             if (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && !board[0][i].equals(" ")) {
                 if (board[0][i].equals("X")) {
-                    value += 1; // Player wins
+                    setValue(10); // Player wins
                 } else if (board[0][i].equals("O")) {
-                    value -= 1; // Computer wins
+                    setValue(-10); // Computer wins
                 }
                 return;
             }
@@ -144,20 +142,33 @@ public class Board implements BoardOp {
         // Check diagonals
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(" ")) {
             if (board[0][0].equals("X")) {
-                value += 1; // Player wins
+                setValue(10); // Player wins
             } else if (board[0][0].equals("O")) {
-                value -= 1; // Computer wins
+                setValue(-10); // Computer wins
             }
             return;
         }
 
         if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals(" ")) {
             if (board[0][2].equals("X")) {
-                value += 1; // Player wins
+                setValue(+10); // Player wins
             } else if (board[0][2].equals("O")) {
-                value -= 1; // Computer wins
+                setValue(-10); // Computer wins
             }
         }
+    }
+
+    public boolean isBlockingMove(Board board) {
+        return Objects.equals(board.checkBoard(board), "win");
+    }
+
+    public String checkBoard(Board board) {
+        if (board.isWinner()) {
+            return "win";
+        } else if (!board.isWinner() && !board.hasEmptyCells()) {
+            return "draw";
+        }
+        return "continue";
     }
 
     public boolean isWinner() {
@@ -176,12 +187,9 @@ public class Board implements BoardOp {
         }
 
         // Check diagonals
-        if (checkLine(board[0][0], board[1][1], board[2][2]) || checkLine(board[0][2], board[1][1], board[2][0])) {
-            return true;
-        }
-
-        return false;
+        return checkLine(board[0][0], board[1][1], board[2][2]) || checkLine(board[0][2], board[1][1], board[2][0]);
     }
+
     private boolean checkLine(String a, String b, String c) {
         return (!a.equals(" ")) && (a.equals(b)) && (b.equals(c));
     }
