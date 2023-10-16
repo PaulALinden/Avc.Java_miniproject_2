@@ -18,7 +18,7 @@ public class MinMax {
         }
 
         if (depth == 0 || board.getChildBoards().isEmpty()) {
-            return board.getValue()-1;
+            return board.getValue()-depth;
         }
 
         if (isMaximizingPlayer) {

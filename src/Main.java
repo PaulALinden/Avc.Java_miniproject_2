@@ -9,8 +9,8 @@ public class Main {
     public static void main(String[] args) {
 
         String[][] initBoard2 = {
-                {" ", " ", " "},
-                {" ", " ", " "},
+                {"X", "O", "X"},
+                {"O", "O", "X"},
                 {" ", " ", " "}
 
         };
