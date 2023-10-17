@@ -5,22 +5,23 @@ import java.util.Objects;
 
 public class Board implements BoardOp {
 
-    private int value;
     private String[][] board;
-
-    private final ArrayList<Board> childBoards = new ArrayList<>();
-
-    public Board(int value, String[][] board) {
-        this.value = value;
+    ArrayList<Board> childBoards;
+    int rowCord;
+    int columnCord;
+    public Board(String[][] board, int rowCord, int columnCord) {
         this.board = board;
+        this.rowCord = rowCord;
+        this.columnCord = columnCord;
+
+        this.childBoards = new ArrayList<>();
     }
 
-    public int getValue() {
-        return value;
+    public int getColumnCord(){
+        return columnCord;
     }
-
-    public void setValue(int newValue) {
-        value = newValue;
+    public int getRowCord() {
+        return rowCord;
     }
 
     public String[][] getBoard() {
@@ -69,10 +70,6 @@ public class Board implements BoardOp {
     @Override
     public void createChildBoards(Board board,String marker) {
 
-        if (value != 0) {
-            return;
-        }
-
         String[][] currentBoard = board.getBoard();
 
         for (int row = 0; row < currentBoard.length; row++) {
@@ -84,9 +81,10 @@ public class Board implements BoardOp {
                     for (int i = 0; i < currentBoard.length; i++) {
                         newBoard[i] = currentBoard[i].clone();
                     }
+
                     newBoard[row][col] = marker;
 
-                    Board newChildBoard = new Board(0, newBoard);
+                    Board newChildBoard = new Board(newBoard, row, col);
                     childBoards.add(newChildBoard);
                 }
             }
@@ -150,10 +148,6 @@ public class Board implements BoardOp {
             }
         }
         return 0;
-    }
-
-    public boolean isBlockingMove(Board board) {
-        return Objects.equals(board.checkBoard(board), "win");
     }
 
     public String checkBoard(Board board) {

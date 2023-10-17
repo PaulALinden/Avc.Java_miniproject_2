@@ -30,7 +30,6 @@ public class GameView {
                 System.out.println("------------------");
 
                 System.out.println("Your best play:");
-                System.out.println(bestPlay.getValue());
                 bestPlay.printBoard();
 
                 System.out.println("Current board:");
@@ -51,6 +50,8 @@ public class GameView {
                 rootBoard.printBoard();
                 return;
             }
+
+
             if (rootBoard.hasEmptyCells()) {
                 gameHandler.computerMakeMove();
                 System.out.println("------------------");
@@ -58,9 +59,8 @@ public class GameView {
 
             if(hasResult("Computer wins")){
                 rootBoard.printBoard();
-                return;}
-
-
+                return;
+            }
         }
     }
 

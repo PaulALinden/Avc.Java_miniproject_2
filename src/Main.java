@@ -14,15 +14,9 @@ public class Main {
                 {" ", " ", " "}
 
         };
-        String[][] initBoard2 = {
-                {"X", "O", "X"},
-                {"O", "X", " "},
-                {"X", "O", " "}
-
-        };
 
         Scanner scanner = new Scanner(System.in);
-        Board rootBoard = new Board(0, initBoard1);
+        Board rootBoard = new Board(initBoard1,0,0);
         GameHandler gameHandler = new GameHandler(rootBoard);
         GameView gameView = new GameView(rootBoard,gameHandler,scanner);
 
