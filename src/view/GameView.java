@@ -2,7 +2,6 @@ package view;
 
 import controller.GameHandler;
 import model.Board;
-import model.childCount;
 
 import java.util.Objects;
 import java.util.Scanner;

@@ -10,7 +10,5 @@ public interface BoardOp {
     ArrayList<Board> getChildBoards();
     boolean isValidMove(int row, int col);
     void placeMarker(String mark, int row, int col);
-    void evalMove();
-
-
+    int evalMove();
 }

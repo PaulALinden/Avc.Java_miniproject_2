@@ -1,12 +1,7 @@
 package model;
 
-import controller.GameHandler;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static model.childCount.child;
-import static model.childCount.childCounter;
 
 public class Board implements BoardOp {
 
@@ -25,7 +20,7 @@ public class Board implements BoardOp {
     }
 
     public void setValue(int newValue) {
-         value = newValue;
+        value = newValue;
     }
 
     public String[][] getBoard() {
@@ -114,16 +109,16 @@ public class Board implements BoardOp {
     }
 
     @Override
-    public void evalMove() {
+    public int evalMove() {
+
         // Check rows
         for (String[] row : board) {
             if (row[0].equals(row[1]) && row[1].equals(row[2]) && !row[0].equals(" ")) {
                 if (row[0].equals("X")) {
-                    setValue(1); // Player wins
+                    return 10; // Player wins
                 } else if (row[0].equals("O")) {
-                    setValue(-1); // Computer wins
+                    return -10; // Computer wins
                 }
-                return;
             }
         }
 
@@ -131,31 +126,30 @@ public class Board implements BoardOp {
         for (int i = 0; i < board[0].length; i++) {
             if (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && !board[0][i].equals(" ")) {
                 if (board[0][i].equals("X")) {
-                    setValue(10); // Player wins
+                    return 10; // Player wins
                 } else if (board[0][i].equals("O")) {
-                    setValue(-10); // Computer wins
+                    return -10; // Computer wins
                 }
-                return;
             }
         }
 
         // Check diagonals
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(" ")) {
             if (board[0][0].equals("X")) {
-                setValue(10); // Player wins
+                return 10; // Player wins
             } else if (board[0][0].equals("O")) {
-                setValue(-10); // Computer wins
+                return -10; // Computer wins
             }
-            return;
         }
 
         if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals(" ")) {
             if (board[0][2].equals("X")) {
-                setValue(+10); // Player wins
+               return 10; // Player wins
             } else if (board[0][2].equals("O")) {
-                setValue(-10); // Computer wins
+                return -10; // Computer wins
             }
         }
+        return 0;
     }
 
     public boolean isBlockingMove(Board board) {
