@@ -9,15 +9,12 @@ import static controller.MinMax.minMax;
 public class GameHandler {
 
     Board rootBoard;
-
     public GameHandler(Board rootBoard) {
         this.rootBoard = rootBoard;
     }
-
     public void playerMakeMove(int row, int col) {
         rootBoard.placeMarker("X", row, col);
     }
-
     public Board bestMoveForPlayer() {
         int alpha = Integer.MIN_VALUE;
         int beta = Integer.MAX_VALUE;
@@ -30,7 +27,6 @@ public class GameHandler {
 
         return bestChild;
     }
-
     public void computerMakeMove() {
         int alpha = Integer.MIN_VALUE;
         int beta = Integer.MAX_VALUE;
@@ -43,12 +39,11 @@ public class GameHandler {
         // Apply the computer's move to the current board
         rootBoard.setBoard(bestChild.getBoard());
     }
-
     public Board getBestChild(int bestResult, int alpha, int beta, boolean isMaximizingPlayer) {
         Board bestChild = null;
 
         for (Board child : rootBoard.getChildBoards()) {
-            child.evalMove();
+
             int result = minMax(child, 9, alpha, beta, isMaximizingPlayer);
 
             if (isMaximizingPlayer) {
@@ -59,7 +54,6 @@ public class GameHandler {
                     bestResult = result;
                     bestChild = child;
                 }
-
                 alpha = Math.max(alpha, result);
 
             }else {
@@ -70,7 +64,6 @@ public class GameHandler {
                     bestResult = result;
                     bestChild = child;
                 }
-
                 beta = Math.min(beta, result);
             }
 
@@ -80,7 +73,6 @@ public class GameHandler {
         }
         return bestChild;
     }
-
     public void createPossibleMoves(String marker) {
         rootBoard.emptyChildBoards();
         rootBoard.createChildBoards(rootBoard, marker);

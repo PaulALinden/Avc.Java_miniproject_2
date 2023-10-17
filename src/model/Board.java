@@ -109,15 +109,15 @@ public class Board implements BoardOp {
     }
 
     @Override
-    public int evalMove() {
+    public int evalMove(int depth) {
 
         // Check rows
         for (String[] row : board) {
             if (row[0].equals(row[1]) && row[1].equals(row[2]) && !row[0].equals(" ")) {
                 if (row[0].equals("X")) {
-                    return 10; // Player wins
+                    return 10-depth; // Player wins
                 } else if (row[0].equals("O")) {
-                    return -10; // Computer wins
+                    return -10+depth; // Computer wins
                 }
             }
         }
@@ -126,9 +126,9 @@ public class Board implements BoardOp {
         for (int i = 0; i < board[0].length; i++) {
             if (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && !board[0][i].equals(" ")) {
                 if (board[0][i].equals("X")) {
-                    return 10; // Player wins
+                    return 10-depth; // Player wins
                 } else if (board[0][i].equals("O")) {
-                    return -10; // Computer wins
+                    return -10+depth; // Computer wins
                 }
             }
         }
@@ -136,17 +136,17 @@ public class Board implements BoardOp {
         // Check diagonals
         if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(" ")) {
             if (board[0][0].equals("X")) {
-                return 10; // Player wins
+                return 10-depth; // Player wins
             } else if (board[0][0].equals("O")) {
-                return -10; // Computer wins
+                return -10+depth; // Computer wins
             }
         }
 
         if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals(" ")) {
             if (board[0][2].equals("X")) {
-               return 10; // Player wins
+               return 10-depth; // Player wins
             } else if (board[0][2].equals("O")) {
-                return -10; // Computer wins
+                return -10+depth; // Computer wins
             }
         }
         return 0;

@@ -21,34 +21,8 @@ public class GameView {
 
     public void mainGameView(){
 
-        rootBoard.printBoard();
-
-        System.out.println("Your move:");
-        System.out.println("Row:");
-        int row = scanner.nextInt();
-        System.out.println("Col:");
-        int col = scanner.nextInt();
-
-        gameHandler.playerMakeMove(row, col);
 
         while (true) {
-            // | Only for testing scenarios, should be removed later.    |
-            // v                   .          .                          v
-            if(hasResult("You win")){
-                rootBoard.printBoard();
-                return;
-            }
-            // ^ Only for testing scenarios, should be removed later. ^
-            // |                                                      |
-
-            if (rootBoard.hasEmptyCells()) {
-                gameHandler.computerMakeMove();
-                System.out.println("------------------");
-            }
-
-            if(hasResult("Computer wins")){
-                rootBoard.printBoard();
-                return;}
 
             if (rootBoard.hasEmptyCells()) {
 
@@ -65,10 +39,10 @@ public class GameView {
                 System.out.println("Your move: ");
 
                 System.out.println("Row:");
-                row = scanner.nextInt();
+                int row = scanner.nextInt();
 
                 System.out.println("Col:");
-                col = scanner.nextInt();
+                int col = scanner.nextInt();
 
                 gameHandler.playerMakeMove(row,col);
             }
@@ -77,6 +51,16 @@ public class GameView {
                 rootBoard.printBoard();
                 return;
             }
+            if (rootBoard.hasEmptyCells()) {
+                gameHandler.computerMakeMove();
+                System.out.println("------------------");
+            }
+
+            if(hasResult("Computer wins")){
+                rootBoard.printBoard();
+                return;}
+
+
         }
     }
 
