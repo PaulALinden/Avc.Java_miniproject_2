@@ -3,53 +3,32 @@ package controller;
 import model.Board;
 
 public class MinMax {
-    public static int minMax(Board board, int depth, int alpha, int beta, boolean isMaximizingPlayer) {
-        int boardEval = board.evalMove(depth);
+    public static int minMax(Board firstChild, int depth, boolean isMaximizingPlayer) {
+        int boardEval = firstChild.evalMove(depth);
 
-        String marker;
-        if (isMaximizingPlayer) {
-            marker = "O";
-        } else {
-            marker = "X";
-        }
-
-        if (board.hasEmptyCells()) {
-            board.createChildBoards(board, marker);
-        }
-
-        if (Math.abs(boardEval) > 0 ||depth == 0 || board.getChildBoards().isEmpty()) {
+        if (depth == 9 || !firstChild.hasEmptyCells(firstChild)) {
             return boardEval;
         }
 
         if (isMaximizingPlayer) {
+
+            firstChild.createChildBoards(firstChild.getBoard(), "X");
             int maxEval = Integer.MIN_VALUE;
-            for (Board child : board.getChildBoards()) {
 
-                int eval = minMax(child, depth - 1, alpha, beta, false);
-
+            for (Board grandChild : firstChild.getChildBoards()) {
+                int eval = minMax(grandChild, depth + 1, false);
                 maxEval = Math.max(maxEval, eval);
-                alpha = Math.max(alpha, eval);
-
-                if (beta <= alpha) {
-                    break;
-                }
             }
             return maxEval;
 
         } else {
+
+            firstChild.createChildBoards(firstChild.getBoard(), "O");
             int minEval = Integer.MAX_VALUE;
-
-            for (Board child : board.getChildBoards()) {
-
-                int eval = minMax(child, depth - 1, alpha, beta, true);
-
+            for (Board grandChild : firstChild.getChildBoards()) {
+                int eval = minMax(grandChild, depth + 1, true);
                 minEval = Math.min(minEval, eval);
-                beta = Math.min(beta, eval);
-                if (beta <= alpha) {
-                    break;
-                }
             }
-
             return minEval;
         }
     }

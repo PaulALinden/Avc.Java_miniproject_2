@@ -7,16 +7,16 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        final String EMPTY = " ";
 
-        String[][] initBoard1 = {
-                {" ", " ", " "},
-                {" ", " ", " "},
-                {" ", " ", " "}
-
+        String[][] initBoard = {
+                {EMPTY,EMPTY,EMPTY},
+                {EMPTY,EMPTY,EMPTY},
+                {EMPTY,EMPTY,EMPTY}
         };
 
         Scanner scanner = new Scanner(System.in);
-        Board rootBoard = new Board(initBoard1,0,0);
+        Board rootBoard = new Board(initBoard);
         GameHandler gameHandler = new GameHandler(rootBoard);
         GameView gameView = new GameView(rootBoard,gameHandler,scanner);
 

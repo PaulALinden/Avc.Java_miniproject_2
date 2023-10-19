@@ -10,54 +10,46 @@ public class GameView {
 
     GameHandler gameHandler;
     Scanner scanner;
-
     Board rootBoard;
 
-    public GameView(Board rootBoard, GameHandler gameHandler, Scanner scanner){
+    public GameView(Board rootBoard, GameHandler gameHandler, Scanner scanner) {
         this.gameHandler = gameHandler;
         this.scanner = scanner;
         this.rootBoard = rootBoard;
     }
 
-    public void mainGameView(){
+    public void mainGameView() {
 
 
         while (true) {
 
-            if (rootBoard.hasEmptyCells()) {
+            Board bestPlay = gameHandler.playerMakeMove();
+            System.out.println("------------------");
+            System.out.println("Your best play:");
+            bestPlay.printBoard();
 
-                Board bestPlay = gameHandler.bestMoveForPlayer();
-                System.out.println("------------------");
+            System.out.println("Current board:");
+            rootBoard.printBoard();
 
-                System.out.println("Your best play:");
-                bestPlay.printBoard();
+            System.out.println("Your move: ");
 
-                System.out.println("Current board:");
-                rootBoard.printBoard();
+            System.out.println("Row:");
+            int row = scanner.nextInt();
 
-                System.out.println("Your move: ");
+            System.out.println("Col:");
+            int col = scanner.nextInt();
 
-                System.out.println("Row:");
-                int row = scanner.nextInt();
+            gameHandler.playerMakeMove(row, col);
 
-                System.out.println("Col:");
-                int col = scanner.nextInt();
-
-                gameHandler.playerMakeMove(row,col);
-            }
-
-            if(hasResult("You win")){
+            if (hasResult("You win")) {
                 rootBoard.printBoard();
                 return;
             }
 
+            gameHandler.computerMakeMove();
+            System.out.println("------------------");
 
-            if (rootBoard.hasEmptyCells()) {
-                gameHandler.computerMakeMove();
-                System.out.println("------------------");
-            }
-
-            if(hasResult("Computer wins")){
+            if (hasResult("Computer wins")) {
                 rootBoard.printBoard();
                 return;
             }
