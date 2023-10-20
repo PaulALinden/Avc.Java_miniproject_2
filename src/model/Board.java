@@ -73,17 +73,18 @@ public class Board implements BoardOp {
         this.board[row][col] = mark;
     }
     @Override
-    public int evaluateBoard(int depth) {
+    public int evaluateBoard() {
         final int WINSCORE = 10;
         final int LOSESCORE = -10;
         final int DRAWSCORE = 0;
 
         final String PLAYER = "X";
         final String OPPONENT = "O";
+        final String EMPTY = " ";
 
         // Check rows
         for (int i = 0; i <3; i++) {
-            if (board[i][0].equals(board[i][1]) && board[i][1].equals(board[i][2]) && !board[i][0].equals(" ")) {
+            if (board[i][0].equals(board[i][1]) && board[i][1].equals(board[i][2]) && !board[i][0].equals(EMPTY)) {
                 if (board[i][0].equals(PLAYER)) {
                     return WINSCORE; // Player wins
                 } else if (board[i][0].equals(OPPONENT)) {
@@ -91,9 +92,10 @@ public class Board implements BoardOp {
                 }
             }
         }
+
         // Check columns
         for (int i = 0; i <3; i++) {
-            if (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && !board[0][i].equals(" ")) {
+            if (board[0][i].equals(board[1][i]) && board[1][i].equals(board[2][i]) && !board[0][i].equals(EMPTY)) {
                 if (board[0][i].equals(PLAYER)) {
                     return WINSCORE; // Player wins
                 } else if (board[0][i].equals(OPPONENT)) {
@@ -102,7 +104,7 @@ public class Board implements BoardOp {
             }
         }
         // Check diagonals
-        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(" ")) {
+        if (board[0][0].equals(board[1][1]) && board[1][1].equals(board[2][2]) && !board[0][0].equals(EMPTY)) {
             if (board[0][0].equals(PLAYER)) {
                 return WINSCORE; // Player wins
             } else if (board[0][0].equals(OPPONENT)) {
@@ -110,7 +112,7 @@ public class Board implements BoardOp {
             }
         }
 
-        if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals(" ")) {
+        if (board[0][2].equals(board[1][1]) && board[1][1].equals(board[2][0]) && !board[0][2].equals(EMPTY)) {
             if (board[0][2].equals(PLAYER)) {
                 return WINSCORE; // Player wins
             } else if (board[0][2].equals(OPPONENT)) {
@@ -119,34 +121,6 @@ public class Board implements BoardOp {
         }
 
         return DRAWSCORE;
-    }
-
-    private int countBlockingMoves(String player, String opponent) {
-        int blockingMoves = 0;
-
-        // Check rows
-        for (int i = 0; i < 3; i++) {
-            if (board[i][0].equals(opponent) && board[i][1].equals(opponent) && board[i][2].equals(" ")) {
-                blockingMoves++;
-            }
-        }
-
-        // Check columns
-        for (int i = 0; i < 3; i++) {
-            if (board[0][i].equals(opponent) && board[1][i].equals(opponent) && board[2][i].equals(" ")) {
-                blockingMoves++;
-            }
-        }
-
-        // Check diagonals
-        if (board[0][0].equals(opponent) && board[1][1].equals(opponent) && board[2][2].equals(" ")) {
-            blockingMoves++;
-        }
-        if (board[0][2].equals(opponent) && board[1][1].equals(opponent) && board[2][0].equals(" ")) {
-            blockingMoves++;
-        }
-
-        return blockingMoves;
     }
 
     public String checkBoard(Board board) {

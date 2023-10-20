@@ -9,5 +9,5 @@ public interface BoardOp {
     void createChildBoards(String [][] board,String marker);
     ArrayList<Board> getChildBoards();
     void placeMarker(String mark, int row, int col);
-    int evaluateBoard(int depth);
+    int evaluateBoard();
 }

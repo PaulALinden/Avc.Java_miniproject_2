@@ -41,10 +41,10 @@ public class GameHandler {
         int count = 0;
 
         for (Board child : rootBoard.getChildBoards()) {
-            int result = minMax(child, 0, false);
+            int result = minMax(child, 0, true);
             count++;
-            System.out.println("Result of computer board " +count+ ": " + result);
-            child.printBoard();
+           System.out.println("Result of computer board " +count+ ": " + result);
+           child.printBoard();
 
             if (result < currentBestResult) {
                 currentBestResult = result;

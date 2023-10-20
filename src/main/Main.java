@@ -1,3 +1,5 @@
+package main;
+
 import controller.GameHandler;
 import model.Board;
 import view.GameView;
