@@ -74,8 +74,8 @@ public class Board implements BoardOp {
     }
     @Override
     public int evaluateBoard(int depth) {
-        final int WINSCORE = 10 - depth;
-        final int LOSESCORE = -10 + depth;
+        final int WINSCORE = 10;
+        final int LOSESCORE = -10;
         final int DRAWSCORE = 0;
 
         final String PLAYER = "X";

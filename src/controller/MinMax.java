@@ -6,6 +6,11 @@ public class MinMax {
     public static int minMax(Board firstChild, int depth, boolean isMaximizingPlayer) {
         int boardEval = firstChild.evaluateBoard(depth);
 
+        if (boardEval == 10){
+            return boardEval - depth;}
+        if (boardEval == -10){
+            return boardEval + depth;}
+
         if (depth == 10 || !firstChild.hasEmptyCells(firstChild)) {
             return boardEval;
         }
