@@ -4,7 +4,7 @@ import model.Board;
 
 public class MinMax {
     public static int minMax(Board firstChild, int depth, boolean isMaximizingPlayer) {
-        int boardEval = firstChild.evalMove(depth);
+        int boardEval = firstChild.evaluateBoard(depth);
 
         if (depth == 10 || !firstChild.hasEmptyCells(firstChild)) {
             return boardEval;

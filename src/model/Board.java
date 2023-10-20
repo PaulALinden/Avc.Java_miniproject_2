@@ -73,7 +73,7 @@ public class Board implements BoardOp {
         this.board[row][col] = mark;
     }
     @Override
-    public int evalMove(int depth) {
+    public int evaluateBoard(int depth) {
         final int WINSCORE = 10 - depth;
         final int LOSESCORE = -10 + depth;
         final int DRAWSCORE = 0;
