@@ -12,7 +12,9 @@ public class MinMax {
 
         if (isMaximizingPlayer) {
 
-            firstChild.createChildBoards(firstChild.getBoard(), "X");
+            if (firstChild.getChildBoards().isEmpty()) {
+                firstChild.createChildBoards(firstChild.getBoard(), "X");
+            }
             int maxEval = Integer.MIN_VALUE;
 
             for (Board grandChild : firstChild.getChildBoards()) {
@@ -23,7 +25,9 @@ public class MinMax {
 
         } else {
 
-            firstChild.createChildBoards(firstChild.getBoard(), "O");
+            if (firstChild.getChildBoards().isEmpty()) {
+                firstChild.createChildBoards(firstChild.getBoard(), "O");
+            }
             int minEval = Integer.MAX_VALUE;
             for (Board grandChild : firstChild.getChildBoards()) {
                 int eval = minMax(grandChild, depth + 1, true);
