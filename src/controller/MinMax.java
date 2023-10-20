@@ -28,6 +28,7 @@ public class MinMax {
             if (firstChild.getChildBoards().isEmpty()) {
                 firstChild.createChildBoards(firstChild.getBoard(), "O");
             }
+
             int minEval = Integer.MAX_VALUE;
             for (Board grandChild : firstChild.getChildBoards()) {
                 int eval = minMax(grandChild, depth + 1, true);
