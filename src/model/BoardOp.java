@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public interface BoardOp {
 
     void printBoard();
-    boolean hasEmptyCells(Board board);
-    void createChildBoards(String [][] board,String marker);
-    ArrayList<Board> getChildBoards();
-    void placeMarker(String mark, int row, int col);
+    boolean hasNoEmptyCells();
+    void createPossibleBoards(String marker);
+    ArrayList<Board> getPossibleBoards();
+    void addMarkerToBoard(String mark, int row, int col);
     int evaluateBoard();
 }

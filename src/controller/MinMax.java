@@ -7,39 +7,29 @@ public class MinMax {
 
         int boardEval = currentBoard.evaluateBoard();
 
-        if (boardEval == 10) {
-            return boardEval - depth;
-        }
-
-        if (boardEval == -10) {
-            return boardEval + depth;
-        }
-
-        if (depth == 10 || !currentBoard.hasEmptyCells(currentBoard)) {
-            return boardEval;
-        }
+        if (boardEval == 10) {return boardEval - depth;}
+        if (boardEval == -10) {return boardEval + depth;}
+        if (depth == 10 || currentBoard.hasNoEmptyCells()) {return boardEval;}
 
         if (isMaximizingPlayer) {
 
-            currentBoard.createChildBoards(currentBoard.getBoard(), "O");
+            currentBoard.createPossibleBoards("O");
             int maxEval = Integer.MIN_VALUE;
 
-            for (Board newBoard : currentBoard.getChildBoards()) {
+            for (Board newBoard : currentBoard.getPossibleBoards()) {
                 int eval = minMax(newBoard, depth + 1, false);
                 maxEval = Math.max(maxEval, eval);
             }
-
             return maxEval;
         } else {
 
-            currentBoard.createChildBoards(currentBoard.getBoard(), "X");
+            currentBoard.createPossibleBoards("X");
             int minEval = Integer.MAX_VALUE;
 
-            for (Board grandChild : currentBoard.getChildBoards()) {
+            for (Board grandChild : currentBoard.getPossibleBoards()) {
                 int eval = minMax(grandChild, depth + 1, true);
                 minEval = Math.min(minEval, eval);
             }
-
             return minEval;
         }
     }

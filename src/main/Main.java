@@ -17,10 +17,10 @@ public class Main {
                 {EMPTY,EMPTY,EMPTY}
         };
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner playerInput = new Scanner(System.in);
         Board rootBoard = new Board(initBoard);
         GameHandler gameHandler = new GameHandler(rootBoard);
-        GameView gameView = new GameView(rootBoard,gameHandler,scanner);
+        GameView gameView = new GameView(rootBoard,gameHandler,playerInput);
 
         gameView.mainGameView();
     }

@@ -10,53 +10,58 @@ public class GameHandler {
     public GameHandler(Board rootBoard) {
         this.rootBoard = rootBoard;
     }
-    public void playerSetMarker(int row, int col) {
-        rootBoard.placeMarker("X", row, col);
+    public void setMarker(int row, int col) {
+        this.rootBoard.addMarkerToBoard("X", row, col);
     }
-    public Board playerSetMarker() {
-        initPossibleMoves("X");
-        Board bestChild = null;
+    public Board optimalMovePlayer() {
+        createPossibleMoves("X");
+        Board bestMove = null;
 
-        int currentBestResult = Integer.MIN_VALUE;
+        int bestResult = Integer.MIN_VALUE;
         int count = 0;
 
-        for (Board child : rootBoard.getChildBoards()) {
-            int result = minMax(child, 0, true);
-            count++;
-            System.out.println("Result of player board " +count+ ": " + result);
-            child.printBoard();
+        for (Board possibleBoards : this.rootBoard.getPossibleBoards()) {
 
-                if (result > currentBestResult) {
-                    currentBestResult = result;
-                    bestChild = child;
+            int boardEval = minMax(possibleBoards, 0, true);
+            //For Debugging
+            count++;
+            System.out.println("Result of player board " +count+ ": " + boardEval);
+            possibleBoards.printBoard();
+
+                if (boardEval > bestResult) {
+                    bestResult = boardEval;
+                    bestMove = possibleBoards;
                 }
         }
-        return bestChild;
+        return bestMove;
     }
-    public void computerMakeMove() {
-        initPossibleMoves("O");
-        Board bestCompChild = null;
+    public void optimalMoveComputer() {
+        createPossibleMoves("O");
+        Board bestComputerMove = null;
 
-        int currentBestResult = Integer.MAX_VALUE;
+        int bestResult = Integer.MAX_VALUE;
         int count = 0;
 
-        for (Board child : rootBoard.getChildBoards()) {
-            int result = minMax(child, 0, true);
+        for (Board child : this.rootBoard.getPossibleBoards()) {
+            int boardEval = minMax(child, 0, true);
+
+            //For Debugging
             count++;
-           System.out.println("Result of computer board " +count+ ": " + result);
+           System.out.println("Result of computer board " +count+ ": " + boardEval);
            child.printBoard();
 
-            if (result < currentBestResult) {
-                currentBestResult = result;
-                bestCompChild = child;
+            if (boardEval < bestResult) {
+                bestResult = boardEval;
+                bestComputerMove = child;
             }
         }
-        assert bestCompChild != null;
-        rootBoard.setBoard(bestCompChild.getBoard());
+        if (bestComputerMove != null) {
+            rootBoard.setBoard(bestComputerMove.getBoard());
+        }
     }
 
-    public void initPossibleMoves(String marker) {
-        rootBoard.getChildBoards().clear();
-        rootBoard.createChildBoards(rootBoard.getBoard(), marker);
+    public void createPossibleMoves(String marker) {
+        this.rootBoard.getPossibleBoards().clear();
+        this.rootBoard.createPossibleBoards(marker);
     }
 }
