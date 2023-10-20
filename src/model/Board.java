@@ -120,6 +120,35 @@ public class Board implements BoardOp {
 
         return DRAWSCORE;
     }
+
+    private int countBlockingMoves(String player, String opponent) {
+        int blockingMoves = 0;
+
+        // Check rows
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0].equals(opponent) && board[i][1].equals(opponent) && board[i][2].equals(" ")) {
+                blockingMoves++;
+            }
+        }
+
+        // Check columns
+        for (int i = 0; i < 3; i++) {
+            if (board[0][i].equals(opponent) && board[1][i].equals(opponent) && board[2][i].equals(" ")) {
+                blockingMoves++;
+            }
+        }
+
+        // Check diagonals
+        if (board[0][0].equals(opponent) && board[1][1].equals(opponent) && board[2][2].equals(" ")) {
+            blockingMoves++;
+        }
+        if (board[0][2].equals(opponent) && board[1][1].equals(opponent) && board[2][0].equals(" ")) {
+            blockingMoves++;
+        }
+
+        return blockingMoves;
+    }
+
     public String checkBoard(Board board) {
         if (board.isWinner()) {
             return "win";
