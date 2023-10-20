@@ -23,7 +23,7 @@ public class GameView {
 
         while (true) {
 
-            Board bestPlay = gameHandler.playerMakeMove();
+            Board bestPlay = gameHandler.playerSetMarker();
             System.out.println("------------------");
             System.out.println("Your best play:");
             bestPlay.printBoard();
@@ -39,7 +39,7 @@ public class GameView {
             System.out.println("Col:");
             int col = scanner.nextInt();
 
-            gameHandler.playerMakeMove(row, col);
+            gameHandler.playerSetMarker(row, col);
 
             if (hasResult("You win")) {
                 rootBoard.printBoard();

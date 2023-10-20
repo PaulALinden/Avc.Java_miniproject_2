@@ -10,10 +10,10 @@ public class GameHandler {
     public GameHandler(Board rootBoard) {
         this.rootBoard = rootBoard;
     }
-    public void playerMakeMove(int row, int col) {
+    public void playerSetMarker(int row, int col) {
         rootBoard.placeMarker("X", row, col);
     }
-    public Board playerMakeMove() {
+    public Board playerSetMarker() {
         initPossibleMoves("X");
         Board bestChild = null;
 
