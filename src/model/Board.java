@@ -147,4 +147,38 @@ public class Board implements BoardOp {
     private boolean checkLine(String a, String b, String c) {
         return (!a.equals(EMPTY)) && (a.equals(b)) && (b.equals(c));
     }
+
+    public ArrayList<Board> generateChildBoards(String currentPlayer) {
+        ArrayList<Board> childBoards = new ArrayList<>();
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j].equals(EMPTY)) {
+                    String[][] childBoard = cloneBoard(board);
+                    childBoard[i][j] = currentPlayer;
+
+                    Board child = new Board(childBoard);
+                    childBoards.add(child);
+
+                    // Recursively generate child boards for the next player
+                    ArrayList<Board> grandChildBoards = child.generateChildBoards(getNextPlayer(currentPlayer));
+                    child.childBoards.addAll(grandChildBoards);
+                }
+            }
+        }
+
+        return childBoards;
+    }
+
+    private String getNextPlayer(String currentPlayer) {
+        return (currentPlayer.equals("X")) ? "O" : "X";
+    }
+
+    private String[][] cloneBoard(String[][] original) {
+        String[][] clone = new String[original.length][original[0].length];
+        for (int i = 0; i < original.length; i++) {
+            System.arraycopy(original[i], 0, clone[i], 0, original[i].length);
+        }
+        return clone;
+    }
 }
