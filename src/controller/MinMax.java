@@ -7,28 +7,27 @@ public class MinMax {
 
         int boardEval = currentBoard.evaluateBoard();
 
-        if (boardEval == 10) {return boardEval - depth;}
-        if (boardEval == -10) {return boardEval + depth;}
+        if (boardEval == 10) {return boardEval;}
+        if (boardEval == -10) {return boardEval;}
         if (depth == 10 || currentBoard.hasNoEmptyCells()) {return boardEval;}
 
         if (isMaximizingPlayer) {
 
-            currentBoard.createPossibleBoards("O");
+            currentBoard.createPossibleBoards(currentBoard.getOpponent());
             int maxEval = Integer.MIN_VALUE;
 
             for (TwoPlayerBoard newBoard : currentBoard.getPossibleBoards()) {
                 int eval = minMax(newBoard, depth + 1, false);
-                maxEval = Math.max(maxEval, eval);
+                maxEval = Math.max(maxEval, eval)-depth;
             }
             return maxEval;
         } else {
-
-            currentBoard.createPossibleBoards("X");
+            currentBoard.createPossibleBoards(currentBoard.getPlayer());
             int minEval = Integer.MAX_VALUE;
 
-            for (TwoPlayerBoard grandChild : currentBoard.getPossibleBoards()) {
-                int eval = minMax(grandChild, depth + 1, true);
-                minEval = Math.min(minEval, eval);
+            for (TwoPlayerBoard newBoard : currentBoard.getPossibleBoards()) {
+                int eval = minMax(newBoard, depth + 1, true);
+                minEval = Math.min(minEval, eval)+depth;
             }
             return minEval;
         }

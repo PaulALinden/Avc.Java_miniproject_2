@@ -2,7 +2,7 @@ package main;
 
 import controller.GameHandler;
 import model.TwoPlayerBoard;
-import model.TicTacToe;
+import model.TicTacToeBoard;
 import view.GameView;
 
 import java.util.Scanner;
@@ -17,14 +17,8 @@ public class Main {
                 {" "," "," "}
         };
 
-        String[][] testBoard = {
-                {"X","O","X"},
-                {"O","X"," "},
-                {"O"," "," "}
-        };
-
         Scanner playerInput = new Scanner(System.in);
-        TwoPlayerBoard rootBoard = new TicTacToe(testBoard,"X","O");
+        TwoPlayerBoard rootBoard = new TicTacToeBoard(initBoard,"X","O");
         GameHandler gameHandler = new GameHandler(rootBoard);
         GameView gameView = new GameView(rootBoard,gameHandler,playerInput);
 

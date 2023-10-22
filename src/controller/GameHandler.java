@@ -9,30 +9,28 @@ import static controller.MinMax.minMax;
 
 public class GameHandler {
     TwoPlayerBoard rootBoard;
+
     public GameHandler(TwoPlayerBoard rootBoard) {
         this.rootBoard = rootBoard;
     }
+
     public boolean setMarker(int row, int col) {
-        if (Objects.equals(rootBoard.getBoard()[row][col], " ")) {
-            this.rootBoard.addMarkerToBoard("X", row, col);
+        if (Objects.equals(rootBoard.getBoard()[row][col], rootBoard.getEmpty())) {
+            this.rootBoard.addMarkerToBoard(rootBoard.getPlayer(), row, col);
             return true;
         }
         return false;
     }
+
     public TwoPlayerBoard optimalMovePlayer() {
-        createPossibleMoves("X");
+        createPossibleMoves(rootBoard.getPlayer());
         TwoPlayerBoard bestMove = null;
 
         int bestResult = Integer.MIN_VALUE;
-        int count = 0;
 
         for (TwoPlayerBoard possibleBoards : this.rootBoard.getPossibleBoards()) {
 
             int boardEval = minMax(possibleBoards, 0, true);
-            //For Debugging
-            count++;
-            System.out.println("Result of player board " + count + ": " + boardEval);
-            possibleBoards.displayBoard();
 
             if (boardEval > bestResult) {
                 bestResult = boardEval;
@@ -41,36 +39,33 @@ public class GameHandler {
         }
         return bestMove;
     }
+
     public void optimalMoveComputer() {
-        createPossibleMoves("O");
+        createPossibleMoves(rootBoard.getOpponent());
         TwoPlayerBoard bestComputerMove = null;
 
         int bestResult = Integer.MAX_VALUE;
-        int count = 0;
 
-        for (TwoPlayerBoard child : this.rootBoard.getPossibleBoards()) {
-            int boardEval = minMax(child, 0, true);
-
-            //For Debugging
-            count++;
-            System.out.println("Result of computer board " + count + ": " + boardEval);
-            child.displayBoard();
+        for (TwoPlayerBoard possibleBoards : this.rootBoard.getPossibleBoards()) {
+            int boardEval = minMax(possibleBoards, 0, false);
 
             if (boardEval < bestResult) {
                 bestResult = boardEval;
-                bestComputerMove = child;
+                bestComputerMove = possibleBoards;
             }
         }
         if (bestComputerMove != null) {
             rootBoard.setBoard(bestComputerMove.getBoard());
         }
     }
+
     private void createPossibleMoves(String marker) {
         this.rootBoard.getPossibleBoards().clear();
         this.rootBoard.createPossibleBoards(marker);
     }
+
     public GameStates hasResult() {
         this.rootBoard.checkBoardState();
-       return this.rootBoard.getGameStates();
+        return this.rootBoard.getGameStates();
     }
 }

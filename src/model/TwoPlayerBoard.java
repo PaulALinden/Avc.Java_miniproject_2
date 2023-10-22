@@ -16,6 +16,9 @@ public abstract class TwoPlayerBoard implements BoardOperations {
         this.opponent = opponent;
         this.possibleBoards = new ArrayList<>();
     }
+    public String getEmpty() {
+        return empty;
+    }
     public String getPlayer() {
         return player;
     }

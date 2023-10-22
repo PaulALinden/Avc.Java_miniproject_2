@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class TicTacToe extends TwoPlayerBoard {
-    public TicTacToe(String[][] board, String player, String opponent) {
+public class TicTacToeBoard extends TwoPlayerBoard {
+    public TicTacToeBoard(String[][] board, String player, String opponent) {
         super(board, player, opponent);
     }
     @Override
@@ -31,18 +31,18 @@ public class TicTacToe extends TwoPlayerBoard {
     }
     @Override
     public void createPossibleBoards(String marker) {
-
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if (Objects.equals(board[row][col], super.empty)) {
+                if (Objects.equals(this.board[row][col], super.empty)) {
 
                     String[][] newBoard = new String[3][3];
+
                     for (int i = 0; i < 3; i++) {
-                        System.arraycopy(board[i], 0, newBoard[i], 0, board[i].length);
+                        System.arraycopy(this.board[i], 0, newBoard[i], 0, board[i].length);
                     }
 
                     newBoard[row][col] = marker;
-                    this.possibleBoards.add(new TicTacToe(newBoard, "X", "O"));
+                    this.possibleBoards.add(new TicTacToeBoard(newBoard, this.player, this.opponent));
                 }
             }
         }
