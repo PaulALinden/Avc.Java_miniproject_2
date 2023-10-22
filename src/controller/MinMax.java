@@ -1,9 +1,9 @@
 package controller;
 
-import model.Board;
+import model.TwoPlayerBoard;
 
 public class MinMax {
-    public static int minMax(Board currentBoard, int depth, boolean isMaximizingPlayer) {
+    public static int minMax(TwoPlayerBoard currentBoard, int depth, boolean isMaximizingPlayer) {
 
         int boardEval = currentBoard.evaluateBoard();
 
@@ -16,7 +16,7 @@ public class MinMax {
             currentBoard.createPossibleBoards("O");
             int maxEval = Integer.MIN_VALUE;
 
-            for (Board newBoard : currentBoard.getPossibleBoards()) {
+            for (TwoPlayerBoard newBoard : currentBoard.getPossibleBoards()) {
                 int eval = minMax(newBoard, depth + 1, false);
                 maxEval = Math.max(maxEval, eval);
             }
@@ -26,7 +26,7 @@ public class MinMax {
             currentBoard.createPossibleBoards("X");
             int minEval = Integer.MAX_VALUE;
 
-            for (Board grandChild : currentBoard.getPossibleBoards()) {
+            for (TwoPlayerBoard grandChild : currentBoard.getPossibleBoards()) {
                 int eval = minMax(grandChild, depth + 1, true);
                 minEval = Math.min(minEval, eval);
             }
