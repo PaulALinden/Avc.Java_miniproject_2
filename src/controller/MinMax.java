@@ -4,7 +4,6 @@ import model.TwoPlayerBoard;
 
 public class MinMax {
     public static int minMax(TwoPlayerBoard currentBoard, int depth, boolean isMaximizingPlayer) {
-
         int boardEval = currentBoard.evaluateBoard();
 
         if (boardEval == 10) {return boardEval;}
