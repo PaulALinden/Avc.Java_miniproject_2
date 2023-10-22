@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import static controller.MinMax.minMax;
 
+
 public class GameHandler {
     TwoPlayerBoard rootBoard;
 
@@ -14,7 +15,7 @@ public class GameHandler {
         this.rootBoard = rootBoard;
     }
 
-    public boolean setMarker(int row, int col) {
+    public boolean playerMakeMove(int row, int col) {
         if (Objects.equals(rootBoard.getBoard()[row][col], rootBoard.getEmpty())) {
             this.rootBoard.addMarkerToBoard(rootBoard.getPlayer(), row, col);
             return true;

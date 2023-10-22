@@ -56,7 +56,7 @@ public class GameView {
             System.out.println("Col:");
             int col = playerInput.nextInt();
 
-            isValidMove = this.gameHandler.setMarker(row, col);
+            isValidMove = this.gameHandler.playerMakeMove(row, col);
 
             if (!isValidMove) {
                 System.out.println("Not valid move...");
