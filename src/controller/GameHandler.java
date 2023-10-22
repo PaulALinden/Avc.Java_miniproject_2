@@ -49,7 +49,7 @@ public class GameHandler {
         int count = 0;
 
         for (TwoPlayerBoard child : this.rootBoard.getPossibleBoards()) {
-            int boardEval = minMax(child, 0, true);
+            int boardEval = minMax(child, 0, false);
 
             //For Debugging
             count++;
