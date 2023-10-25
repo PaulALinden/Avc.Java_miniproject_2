@@ -107,7 +107,6 @@ public class TicTacToeBoard extends TwoPlayerBoard {
                 return LOSE_SCORE; // Computer wins
             }
         }
-
         return DRAW_SCORE;
     }
     @Override

@@ -48,6 +48,7 @@ public class GameHandler {
         int bestResult = Integer.MAX_VALUE;
 
         for (TwoPlayerBoard possibleBoards : this.rootBoard.getPossibleBoards()) {
+
             int boardEval = minMax(possibleBoards, 0, false);
 
             if (boardEval < bestResult) {

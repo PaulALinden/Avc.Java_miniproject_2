@@ -4,29 +4,29 @@ import model.TwoPlayerBoard;
 
 public class MinMax {
     public static int minMax(TwoPlayerBoard currentBoard, int depth, boolean isMaximizingPlayer) {
-        int boardEval = currentBoard.evaluateBoard();
 
-        if (boardEval == 10) {return boardEval;}
-        if (boardEval == -10) {return boardEval;}
-        if (depth == 10 || currentBoard.hasNoEmptyCells()) {return boardEval;}
+        int evaluateBoard = currentBoard.evaluateBoard();
+
+        if (evaluateBoard == 10){return evaluateBoard-depth;}
+        if (evaluateBoard == -10){return evaluateBoard+depth;}
+        if (currentBoard.hasNoEmptyCells()) {return 0;}
 
         if (isMaximizingPlayer) {
-
             currentBoard.createPossibleBoards(currentBoard.getOpponent());
-            int maxEval = Integer.MIN_VALUE;
+            int maxEval = Integer.MAX_VALUE;
 
             for (TwoPlayerBoard newBoard : currentBoard.getPossibleBoards()) {
                 int eval = minMax(newBoard, depth + 1, false);
-                maxEval = Math.max(maxEval, eval)-depth;
+                maxEval = Math.min(maxEval, eval);
             }
             return maxEval;
         } else {
             currentBoard.createPossibleBoards(currentBoard.getPlayer());
-            int minEval = Integer.MAX_VALUE;
+            int minEval = Integer.MIN_VALUE;
 
             for (TwoPlayerBoard newBoard : currentBoard.getPossibleBoards()) {
                 int eval = minMax(newBoard, depth + 1, true);
-                minEval = Math.min(minEval, eval)+depth;
+                minEval = Math.max(minEval, eval);
             }
             return minEval;
         }
